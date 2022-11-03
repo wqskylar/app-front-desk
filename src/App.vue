@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <h1>前台电商项目</h1>
-    <h2>作者：wq</h2>
+    <!-- <h1>前台电商项目</h1>
+    <h2>作者：wq</h2> -->
     <Header></Header>
   </div>
 </template>
@@ -39,5 +39,39 @@ export default {
   font-weight: normal;
   font-style: normal;
   font-display: block;
+}
+
+/* 公共样式 */
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+/* 通配设置 */
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+li {
+  height: 100%;
+  list-style-type: none;
+}
+
+a {
+  color: #999999;
+  text-decoration: none;
+}
+
+i {
+  font-style: normal;
 }
 </style>
