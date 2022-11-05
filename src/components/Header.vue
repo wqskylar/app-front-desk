@@ -36,7 +36,10 @@
           </h1>
         </div>
         <!-- search module -->
-        <div class="search fr"></div>
+        <div class="search">
+          <input type="text" class="fl" placeholder="请输入搜索内容" />
+          <button class="fl">搜索</button>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +91,6 @@ export default {
 }
 
 .logo {
-  position: absolute;
   height: 100%;
   padding: 0 15px;
   h1 {
@@ -106,14 +108,25 @@ export default {
 }
 
 .search {
-  height: 100%;
-}
+  position: absolute;
+  // width: 490px;
+  // height: 45px;
+  top: 20px;
+  left: 710px;
 
-// 测试样式
-.test1 {
-  background-color: green;
-}
-.test2 {
-  background-color: orange;
+  input {
+    width: 426px;
+    height: 41px;
+    outline: none;
+    border: 2px solid #e2231a;
+  }
+  button {
+    width: 58px;
+    height: 45px;
+    background-color: #e1251b;
+    border: 0;
+    line-height: 45px;
+    color: #fff;
+  }
 }
 </style>
