@@ -3,13 +3,14 @@
     <!-- <h1>前台电商项目</h1>
     <h2>作者：wq</h2> -->
     <Header></Header>
+    <router-view></router-view>
     <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default {
   name: "App",
@@ -23,7 +24,7 @@ export default {
 <style>
 /* app统一设置 */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
@@ -57,11 +58,14 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
+
+.style-red {
+  color: #c81623;
+}
 /* 通配设置 */
 * {
   margin: 0;
   padding: 0;
-  font-size: 20px;
 }
 
 li {
