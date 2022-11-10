@@ -4,7 +4,7 @@
     <h2>作者：wq</h2> -->
     <Header></Header>
     <router-view></router-view>
-    <Footer></Footer>
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 
@@ -24,7 +24,9 @@ export default {
 <style>
 /* app统一设置 */
 #app {
-  font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif;
+  font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB,
+    "\5B8B\4F53", sans-serif;
+  /* font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */

@@ -9,7 +9,7 @@
             <i style="font-family: icomoon; font-size: 12px"></i>
             <a href="#">北京</a>
           </li>
-          <li class="logAndRegister">
+          <li class="log-and-register">
             <router-link class="style-red" to="/register">注册</router-link>
             <router-link class="style-red" to="/login">登录</router-link>
           </li>
@@ -66,7 +66,17 @@
         <!-- search module -->
         <div class="search">
           <input type="text" class="fl" placeholder="请输入搜索内容" />
-          <button class="fl">搜索</button>
+          <button class="fl" @click="goSearch">搜索</button>
+        </div>
+        <!-- hot-word模块 -->
+        <div class="hot-word">
+          <a class="style-red" href="#">家电家装</a>
+          <a href="#">健康好物</a>
+          <a href="#">超值购</a>
+          <a href="#">小米手机</a>
+          <a href="#">拍拍二手</a>
+          <a href="#">苹果</a>
+          <a href="#">家电预售</a>
         </div>
       </div>
     </div>
@@ -76,6 +86,15 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {};
+  },
+  methods: {
+    goSearch() {
+      // 搜索按钮的回调函数
+      this.$router.push("/search");
+    },
+  },
 };
 </script>
 
@@ -91,7 +110,7 @@ export default {
   }
 }
 
-.logAndRegister {
+.log-and-register {
   a {
     padding: 0 0 0 3px;
   }
@@ -115,8 +134,11 @@ export default {
 }
 
 .logo {
+  position: absolute;
   height: 100%;
-  padding: 0 15px;
+  top: 0;
+  left: 30px;
+
   h1 {
     height: 100%;
     width: 200px;
@@ -149,6 +171,15 @@ export default {
     border: 0;
     line-height: 45px;
     color: #fff;
+  }
+}
+
+.hot-word {
+  position: absolute;
+  top: 65px;
+  left: 710px;
+  a {
+    margin: 0 12px;
   }
 }
 </style>
