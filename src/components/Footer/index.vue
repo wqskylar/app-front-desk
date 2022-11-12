@@ -82,7 +82,7 @@
               <li>京鱼座智</li>
             </ul>
           </div>
-          <div class="moreDetails fl">
+          <div class="more-details fl">
             <h5>京东自营覆盖区县</h5>
             <div>
               <p>
@@ -97,7 +97,22 @@
             </div>
           </div>
         </div>
-        <div class="copy-right"></div>
+        <div class="copy-right">
+          <p class="mod-copyright-links">
+            <a href="#">关于我们</a> | <a href="#">联系我们</a> |
+            <a href="#">联系客服</a> | <a href="#">合作招商</a> |
+            <a href="#">商家帮助</a> | <a href="#">营销中心</a> |
+            <a href="#">手机京东</a> | <a href="#">友情链接</a> |
+            <a href="#">销售联盟</a> | <a href="#">京东社区</a> |
+            <a href="#">风险监测</a> | <a href="#">隐私政策</a> |
+            <a href="#">京东公益</a> | <a href="#">English Site</a> |
+            <a href="#">Media & IR</a>
+          </p>
+          <p class="mod-copyright-info">
+            京东旗下网站: <a href="#">京东钱包</a> | <a href="#">京东云</a> |
+            网络内容从业人员违法违规行为举报电话:4006561155-3
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -167,7 +182,6 @@ export default {
     background-position: -123px -192px;
   }
 }
-
 .mod-service-items {
   height: 42px;
 }
@@ -181,7 +195,8 @@ export default {
 }
 
 .mod-help {
-  height: 100%;
+  height: 160px;
+  padding: 20px 0;
   div {
     width: 198px;
     margin: 0 0 0 2px;
@@ -201,7 +216,7 @@ export default {
   }
 }
 
-.moreDetails {
+.more-details {
   h5 {
     text-align: center;
   }
@@ -223,6 +238,16 @@ export default {
   }
   i {
     height: 18px;
+  }
+}
+
+.copy-right {
+  text-align: center;
+  a {
+    color: #666;
+  }
+  p {
+    margin-top: 15px;
   }
 }
 </style>

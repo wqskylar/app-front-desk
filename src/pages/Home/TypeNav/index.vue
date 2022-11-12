@@ -187,7 +187,6 @@ export default {
 .nav-left {
   width: 210px;
   height: 40px;
-  background-color: pink;
   .dt {
     width: 100%;
     height: 100%;
@@ -200,13 +199,19 @@ export default {
 }
 
 .dd {
-  height: 470px;
+  height: 450px;
   width: 100%;
-  margin-top: 2px;
+  /* margin-top: 2px; */
+  ul {
+    background-color: #fefefe;
+    margin: 12px 0 10px 0;
+    padding: 10px 0;
+  }
   li {
     height: 25px;
     line-height: 25px;
     padding: 0 0 0 18px;
+
     a {
       font: 500 14px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
         Hiragino Sans GB, "\5B8B\4F53", sans-serif;
