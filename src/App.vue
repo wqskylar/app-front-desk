@@ -26,12 +26,8 @@ export default {
 #app {
   font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB,
     "\5B8B\4F53", sans-serif;
-  /* font-family: Microsoft YaHei, Avenir, Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-
-  color: #2c3e50;
   margin-top: 60px;
 }
 
@@ -72,7 +68,6 @@ export default {
 }
 
 li {
-  height: 100%;
   list-style-type: none;
 }
 
