@@ -1,5 +1,6 @@
 <template>
   <div>
+    我是{{ categoryList }}
     <div class="nav-top">
       <div class="nav w">
         <div class="nav-left fl" @mouseover="showList">
@@ -162,13 +163,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "TypeNav",
   data() {
     return {};
   },
+  computed: {
+    ...mapState(["home", "categoryList"]),
+    // ...mapState({
+    //   cateoryList:state => state.home.cateoryList
+    // })
+  },
   methods: {
     showList(e) {},
+  },
+  mounted() {
+    this.$store.dispatch("categoryList");
   },
 };
 </script>
