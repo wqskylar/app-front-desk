@@ -44,7 +44,13 @@ export default {
   font-display: block;
 }
 
+.iconmoon {
+  font-family: icomoon;
+  font-size: 16px;
+}
+
 /* 公共样式 */
+
 .fl {
   float: left;
 }
@@ -78,5 +84,12 @@ a {
 
 i {
   font-style: normal;
+}
+
+/* 清除浮动容器 */
+.container::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 </style>

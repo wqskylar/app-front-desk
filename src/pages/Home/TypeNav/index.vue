@@ -1,144 +1,37 @@
 <template>
   <div>
-    我是{{ categoryList }}
     <div class="nav-top">
       <div class="nav w">
         <div class="nav-left fl" @mouseover="showList">
           <div class="dt">全部商品分类</div>
           <div class="dd" v-show="true">
             <ul>
-              <li>
-                <a href="">家用电器</a>
-                <span>/</span>
-                <a href="">数码</a>
-                <span>/</span>
-                <a href="">运营商</a>
-              </li>
-              <li>
-                <a href="">电脑</a>
-                <span>/</span>
-                <a href="">运营商</a>
-                <span>/</span>
-                <a href="">数码</a>
-              </li>
-              <li>
-                <a href="">电脑</a>
-                <span>/</span>
-                <a href="">办公</a>
-                <span>/</span>
-              </li>
-              <li>
-                <a href="">家居</a>
-                <span>/</span>
-                <a href="">家具</a>
-                <span>/</span>
-                <a href="">家装</a>
-                <span>/</span>
-                <a href="">厨具</a>
-              </li>
-              <li>
-                <a href="">男装</a>
-                <span>/</span>
-                <a href="">女装</a>
-                <span>/</span>
-                <a href="">童装</a>
-                <span>/</span>
-                <a href="">内衣</a>
-              </li>
-              <li>
-                <a href="">美妆</a>
-                <span>/</span>
-                <a href="">个户清洁</a>
-                <span>/</span>
-                <a href="">宠物</a>
-              </li>
-              <li>
-                <a href="">女鞋</a>
-                <span>/</span>
-                <a href="">箱包</a>
-                <span>/</span>
-                <a href="">钟表</a>
-                <span>/</span>
-                <a href="">珠宝</a>
-              </li>
-              <li>
-                <a href="">男鞋</a>
-                <span>/</span>
-                <a href="">运动</a>
-                <span>/</span>
-                <a href="">户外</a>
-              </li>
-              <li>
-                <a href="">房产</a>
-                <span>/</span>
-                <a href="">汽车</a>
-                <span>/</span>
-                <a href="">汽车用品</a>
-              </li>
-              <li>
-                <a href="">母婴</a>
-                <span>/</span>
-                <a href="">玩具乐器</a>
-              </li>
-              <li>
-                <a href="">食品</a>
-                <span>/</span>
-                <a href="">酒类</a>
-                <span>/</span>
-                <a href="">生鲜</a>
-                <span>/</span>
-                <a href="">特产</a>
-              </li>
-              <li>
-                <a href="">艺术</a>
-                <span>/</span>
-                <a href="">鲜花</a>
-                <span>/</span>
-                <a href="">农资绿植</a>
-              </li>
-              <li>
-                <a href="">医药保健</a>
-                <span>/</span>
-                <a href="">计生情趣</a>
-              </li>
-              <li>
-                <a href="">图书</a>
-                <span>/</span>
-                <a href="">文娱</a>
-                <span>/</span>
-                <a href="">教育</a>
-                <span>/</span>
-                <a href="">电子书</a>
-              </li>
-              <li>
-                <a href="">机票</a>
-                <span>/</span>
-                <a href="">酒店</a>
-                <span>/</span>
-                <a href="">旅游</a>
-                <span>/</span>
-                <a href="">生活</a>
-              </li>
-              <li>
-                <a href="">众筹</a>
-                <span>/</span>
-                <a href="">白条</a>
-                <span>/</span>
-                <a href="">保险</a>
-                <span>/</span>
-                <a href="">企业金融</a>
-              </li>
-              <li>
-                <a href="">安装</a>
-                <span>/</span>
-                <a href="">维修</a>
-                <span>/</span>
-                <a href="">清洗</a>
-                <span>/</span>
-                <a href="">二手</a>
-              </li>
-              <li>
-                <a href="">工业品</a>
+              <li v-for="c1 in categoryList" :key="c1.id">
+                <div class="c2">
+                  <div class="c2Left">
+                    <div class="c2LeftTop"></div>
+                    <div class="c3" v-for="c2 in c1.child" :key="c2.id">
+                      <div class="c3Left fl">
+                        <i class="iconmoon"></i>
+                        <a href="#" class="c3Name">{{ c2.name }}</a>
+                      </div>
+                      <div class="c3Right fl">
+                        <a
+                          class="c3List"
+                          href="#"
+                          v-for="(c3, index) in c2.child"
+                          :key="index"
+                        >
+                          {{ c3 }}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="c2Right"></div>
+                </div>
+                <a href="#" v-for="(item, index) in c1.name" :key="index">
+                  {{ item }}
+                </a>
               </li>
             </ul>
           </div>
@@ -170,16 +63,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["home", "categoryList"]),
-    // ...mapState({
-    //   cateoryList:state => state.home.cateoryList
-    // })
+    ...mapState("home", ["categoryList"]),
   },
   methods: {
     showList(e) {},
   },
   mounted() {
-    this.$store.dispatch("categoryList");
+    this.$store.dispatch("home/categoryList");
   },
 };
 </script>
@@ -191,7 +81,6 @@ export default {
 
 .nav {
   height: 40px;
-
   padding: 20px 0 0 0;
 }
 
@@ -212,8 +101,8 @@ export default {
 .dd {
   height: 450px;
   width: 100%;
-  /* margin-top: 2px; */
   ul {
+    position: relative;
     background-color: #fefefe;
     margin: 12px 0 10px 0;
     padding: 10px 0;
@@ -230,6 +119,63 @@ export default {
     }
     &:hover {
       background-color: rgb(217, 217, 217);
+      .c2 {
+        display: block;
+      }
+    }
+  }
+}
+
+.c2 {
+  position: absolute;
+  left: 210px;
+  top: 0px;
+  width: 990px;
+  height: 470px;
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
+  .c2Left {
+    width: 800px;
+    height: 470px;
+    float: left;
+  }
+
+  .c2Right {
+    width: 190px;
+    height: 470px;
+    float: right;
+  }
+}
+
+.c2LeftTop {
+  height: 40px;
+}
+
+.c3 {
+  height: 25px;
+  .c3Name,
+  i {
+    float: right;
+    display: block;
+    height: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 25px;
+  }
+  .c3Left {
+    height: 100%;
+    width: 70px;
+    padding-right: 10px;
+  }
+  .c3Right {
+    height: 100%;
+    padding-left: 10px;
+    a {
+      margin-right: 10px;
+      color: rgb(102, 102, 102);
+      font-size: 12px;
     }
   }
 }
