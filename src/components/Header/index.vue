@@ -65,7 +65,12 @@
         </div>
         <!-- search module -->
         <div class="search">
-          <input type="text" class="fl" placeholder="请输入搜索内容" />
+          <input
+            type="text"
+            class="fl"
+            placeholder="请输入搜索内容"
+            v-model="keyWord"
+          />
           <button class="fl" @click="goSearch">搜索</button>
         </div>
         <!-- hot-word模块 -->
@@ -87,12 +92,25 @@
 export default {
   name: "Header",
   data() {
-    return {};
+    return {
+      keyWord: "",
+    };
   },
   methods: {
     goSearch() {
       // 搜索按钮的回调函数
-      this.$router.push("/search");
+      let location = {
+        name: "search",
+        params: {
+          keyWord: this.keyWord || undefined,
+        },
+      };
+      if (this.$route.query) {
+        location.query = this.$route.query;
+        this.$router.push(location);
+      } else {
+        this.$router.push(location);
+      }
     },
   },
 };
@@ -171,6 +189,7 @@ export default {
     border: 0;
     line-height: 45px;
     color: #fff;
+    cursor: pointer;
   }
 }
 

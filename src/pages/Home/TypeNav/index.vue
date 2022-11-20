@@ -2,38 +2,56 @@
   <div>
     <div class="nav-top">
       <div class="nav w">
-        <div class="nav-left fl" @mouseover="showList">
+        <div
+          class="nav-left fl"
+          @mouseenter="enterShow"
+          @mouseleave="leaveShow"
+        >
           <div class="dt">全部商品分类</div>
-          <div class="dd" v-show="true">
-            <ul>
-              <li v-for="c1 in categoryList" :key="c1.id">
-                <div class="c2">
-                  <div class="c2Left">
-                    <div class="c2LeftTop"></div>
-                    <div class="c3" v-for="c2 in c1.child" :key="c2.id">
-                      <div class="c3Left fl">
-                        <i class="iconmoon"></i>
-                        <a href="#" class="c3Name">{{ c2.name }}</a>
-                      </div>
-                      <div class="c3Right fl">
-                        <a
-                          class="c3List"
-                          href="#"
-                          v-for="(c3, index) in c2.child"
-                          :key="index"
-                        >
-                          {{ c3 }}
-                        </a>
+
+          <div class="dd" @click="goSearch">
+            <transition name="dd">
+              <ul v-show="show">
+                <li v-for="c1 in categoryList" :key="c1.id">
+                  <div class="c2">
+                    <div class="c2Left">
+                      <div class="c2LeftTop"></div>
+                      <div class="c3" v-for="c2 in c1.child" :key="c2.id">
+                        <div class="c3Left fl">
+                          <i class="iconmoon"></i>
+                          <a
+                            class="c3Name"
+                            :data-categoryName="c2.name"
+                            :data-c2id="c2.id"
+                            >{{ c2.name }}</a
+                          >
+                        </div>
+                        <div class="c3Right fl">
+                          <a
+                            class="c3List"
+                            v-for="c3 in c2.child"
+                            :key="c3.id"
+                            :data-categoryName="c3.name"
+                            :data-c3id="c3.id"
+                          >
+                            {{ c3.name }}
+                          </a>
+                        </div>
                       </div>
                     </div>
+                    <div class="c2Right"></div>
                   </div>
-                  <div class="c2Right"></div>
-                </div>
-                <a href="#" v-for="(item, index) in c1.name" :key="index">
-                  {{ item }}
-                </a>
-              </li>
-            </ul>
+                  <a
+                    v-for="(item, index) in c1.name"
+                    :key="index"
+                    :data-categoryName="c1.name"
+                    :data-c1id="c1.id"
+                  >
+                    {{ item }}
+                  </a>
+                </li>
+              </ul>
+            </transition>
           </div>
         </div>
         <div class="nav-right fl">
@@ -60,16 +78,52 @@ import { mapState } from "vuex";
 export default {
   name: "TypeNav",
   data() {
-    return {};
+    return {
+      show: true,
+    };
   },
   computed: {
     ...mapState("home", ["categoryList"]),
   },
   methods: {
-    showList(e) {},
+    // 点击三级菜单
+    goSearch(e) {
+      let current = e.target;
+      let { categoryname, c1id, c2id, c3id } = current.dataset;
+      if (categoryname) {
+        let location = { name: "search" };
+        let query = { categoryname: categoryname };
+        if (c1id) {
+          query.category1id = c1id;
+        } else if (c2id) {
+          query.category2id = c2id;
+        } else {
+          query.category3id = c3id;
+        }
+        location.query = query;
+        if (this.$route.params) {
+          location.params = this.$route.params;
+          this.$router.push(location);
+        } else {
+          this.$router.push(location);
+        }
+      }
+    },
+    enterShow() {
+      this.show = true;
+    },
+    leaveShow() {
+      if (this.$route.path != "/home") {
+        this.show = false;
+      }
+    },
   },
   mounted() {
-    this.$store.dispatch("home/categoryList");
+    // 发送ajax获取三级菜单数据
+
+    if (this.$route.path != "/home") {
+      this.show = false;
+    }
   },
 };
 </script>
@@ -99,12 +153,12 @@ export default {
 }
 
 .dd {
-  height: 450px;
-  width: 100%;
+  height: 470px;
+  padding: 12px 0 10px 0;
   ul {
     position: relative;
     background-color: #fefefe;
-    margin: 12px 0 10px 0;
+    /* margin: 12px 0 10px 0; */
     padding: 10px 0;
   }
   li {
@@ -116,6 +170,7 @@ export default {
       font: 500 14px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial,
         Hiragino Sans GB, "\5B8B\4F53", sans-serif;
       color: #333;
+      cursor: pointer;
     }
     &:hover {
       background-color: rgb(217, 217, 217);
@@ -200,5 +255,18 @@ export default {
   content: "";
   display: block;
   clear: both;
+}
+
+/* 过渡动画 dd */
+.dd-enter {
+  height: 0px;
+}
+
+.dd-enter-to {
+  height: 470px;
+}
+
+.dd-enter-active {
+  transition: all 0.3s linear;
 }
 </style>

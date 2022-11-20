@@ -1,5 +1,8 @@
 <template>
-  <div>我是搜索</div>
+  <div>
+    <h1>search模块hahaha</h1>
+    <TypeNav />
+  </div>
 </template>
 
 <script>

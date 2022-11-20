@@ -3,6 +3,8 @@ import App from './App.vue';
 
 //引入路由器
 import router from '@/router';
+//引入mock
+import '@/mock'
 
 // 全局组件
 import TypeNav from "@/pages/Home/TypeNav";

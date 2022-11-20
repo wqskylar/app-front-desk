@@ -9,6 +9,7 @@ import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
+import home from '@/store/home';
 
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -36,6 +37,7 @@ export default new VueRouter({
     // 配置路由
     routes: [
         {
+            name: 'home',
             path: '/home',
             component: Home,
             meta: {
@@ -43,6 +45,7 @@ export default new VueRouter({
             }
         },
         {
+            name: 'search',
             path: '/search',
             component: Search,
             meta: {
@@ -50,6 +53,7 @@ export default new VueRouter({
             }
         },
         {
+            name: 'login',
             path: '/login',
             component: Login,
             meta: {
@@ -57,6 +61,7 @@ export default new VueRouter({
             }
         },
         {
+            name: 'register',
             path: '/register',
             component: Register,
             meta: {
