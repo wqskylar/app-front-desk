@@ -1,40 +1,22 @@
 <template>
   <div class="w">
     <div class="foucs">
-      <div class="banner fl">
-        <a href="#" class="arrow-l">
-          <i style="font-family: icomoon; font-size: 12px"></i>
-        </a>
-        <a href="#" class="arrow-r">
-          <i style="font-family: icomoon; font-size: 12px"></i>
-        </a>
-        <ol class="circle">
-          <li></li>
-          <li class="current"></li>
-          <li></li>
-          <li></li>
-        </ol>
-        <ul class="fl">
-          <li>
-            <a href="#"><img src="./images/q1.jpg" alt="" /></a>
-          </li>
-          <!-- <li>
-            <a href="#"><img src="./images/q2.jpg" alt="" /></a>
-          </li>
-          <li>
-            <a href="#"><img src="./images/q3.jpg" alt="" /></a>
-          </li>
-          <li>
-            <a href="#"><img src="./images/q4.jpg" alt="" /></a>
-          </li> -->
-        </ul>
-        <div class="recommend fr">
-          <ul>
-            <a><img src="./images/w1.avif" alt="" /></a>
-            <a><img src="./images/w2.avif" alt="" /></a>
-            <a><img src="./images/w3.avif" alt="" /></a>
-          </ul>
+      <div class="swiper-container fl">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide"
+            v-for="carousel in bannerList"
+            :key="carousel.id"
+          >
+            <img :src="carousel.imgUrl" alt="" />
+          </div>
         </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
       <div class="news-flash fr">
         <div class="bargain">
@@ -199,8 +181,43 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+// 轮播图引入
+import Swiper from "swiper";
+
 export default {
   name: "Focus",
+  computed: {
+    ...mapState("home", ["bannerList"]),
+  },
+  watch: {
+    bannerList: {
+      handler(newValue, oldValue) {
+        this.$nextTick(() => {
+          var mySwiper = new Swiper(".swiper-container", {
+            // direction: 'vertical', // 垂直切换选项
+            loop: true, // 循环模式选项
+
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
+  },
+  mounted() {
+    this.$store.dispatch("home/getBannerList");
+    // swiper;
+  },
 };
 </script>
 
@@ -211,10 +228,10 @@ export default {
   margin: 10px 0 0 220px;
 }
 
-.banner {
-  position: relative;
+.swiper-container {
   width: 790px;
   height: 470px;
+  margin: 0;
 }
 
 .recommend {
@@ -279,40 +296,40 @@ export default {
   margin-right: 6px;
 }
 
-.circle {
-  position: absolute;
-  bottom: 20px;
-  left: 50px;
-  li {
-    width: 8px;
-    height: 8px;
-    float: left;
-    margin: 0 3px;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-}
+// .circle {
+//   position: absolute;
+//   bottom: 20px;
+//   left: 50px;
+//   li {
+//     width: 8px;
+//     height: 8px;
+//     float: left;
+//     margin: 0 3px;
+//     border: 1px solid rgba(255, 255, 255, 0.7);
+//     border-radius: 50%;
+//     cursor: pointer;
+//   }
+// }
 
-.current {
-  background-color: rgba(255, 255, 255, 0.4);
-}
+// .current {
+//   background-color: rgba(255, 255, 255, 0.4);
+// }
 
-.arrow-l,
-.arrow-r {
-  position: absolute;
-  width: 25px;
-  height: 35px;
-  background-color: rgba(0, 0, 0, 0.3);
-  top: 50%;
-  margin-top: -17.5px;
-  text-align: center;
-  line-height: 35px;
-  color: #fff;
-}
-.arrow-r {
-  left: 565px;
-}
+// .arrow-l,
+// .arrow-r {
+//   position: absolute;
+//   width: 25px;
+//   height: 35px;
+//   background-color: rgba(0, 0, 0, 0.3);
+//   top: 50%;
+//   margin-top: -17.5px;
+//   text-align: center;
+//   line-height: 35px;
+//   color: #fff;
+// }
+// .arrow-r {
+//   left: 565px;
+// }
 
 .lifes {
   height: 230px;

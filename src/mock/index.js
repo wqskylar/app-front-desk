@@ -1,9 +1,9 @@
 import Mock from 'mockjs';
-console.log('mock');
-
+import banner from './banner.json'
+import floor from './floor.json'
 // mock 拦截 ajax 
 // 三级菜单数据
-Mock.mock('/api/product/getBaseCategoryList', 'get', {
+Mock.mock('/mock/product/getBaseCategoryList', 'get', {
     typeNav: [{
         name: ['家用电器'],
         id: '01',
@@ -289,4 +289,14 @@ Mock.mock('/api/product/getBaseCategoryList', 'get', {
             }
         ]
     }]
+})
+
+// 轮播图图片
+Mock.mock('/mock/banner', 'get', {
+    code: 200,
+    data: banner
+})
+Mock.mock('/api', 'get', {
+    code: 200,
+    data: floor
 })

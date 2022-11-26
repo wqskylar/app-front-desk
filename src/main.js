@@ -5,7 +5,8 @@ import App from './App.vue';
 import router from '@/router';
 //引入mock
 import '@/mock'
-
+// swiper样式
+import 'swiper/css/swiper.css'
 // 全局组件
 import TypeNav from "@/pages/Home/TypeNav";
 Vue.component(TypeNav.name, TypeNav);

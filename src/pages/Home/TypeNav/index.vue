@@ -119,8 +119,6 @@ export default {
     },
   },
   mounted() {
-    // 发送ajax获取三级菜单数据
-
     if (this.$route.path != "/home") {
       this.show = false;
     }

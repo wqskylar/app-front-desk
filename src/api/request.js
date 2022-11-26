@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 
 // 1。创建axios
 const request = axios.create({
-    baseURL: '/api',
+    baseURL: '/mock',
     timeout: '5000',
 })
 

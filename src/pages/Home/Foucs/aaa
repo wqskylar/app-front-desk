@@ -1,0 +1,33 @@
+<a href="#" class="arrow-l">
+    <i style="font-family: icomoon; font-size: 12px"></i>
+</a>
+<a href="#" class="arrow-r">
+    <i style="font-family: icomoon; font-size: 12px"></i>
+</a>
+<ol class="circle">
+    <li></li>
+    <li class="current"></li>
+    <li></li>
+    <li></li>
+</ol>
+<ul class="fl">
+    <li>
+        <a href="#"><img src="./images/q1.jpg" alt="" /></a>
+    </li>
+    <!-- <li>
+            <a href="#"><img src="./images/q2.jpg" alt="" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="./images/q3.jpg" alt="" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="./images/q4.jpg" alt="" /></a>
+          </li> -->
+</ul>
+<div class="recommend fr">
+    <ul>
+        <a><img src="./images/w1.avif" alt="" /></a>
+        <a><img src="./images/w2.avif" alt="" /></a>
+        <a><img src="./images/w3.avif" alt="" /></a>
+    </ul>
+</div>
