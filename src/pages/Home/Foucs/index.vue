@@ -18,6 +18,13 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
+      <div class="recommend fl">
+        <ul>
+          <a><img src="./images/w1.avif" alt="" /></a>
+          <a><img src="./images/w2.avif" alt="" /></a>
+          <a><img src="./images/w3.avif" alt="" /></a>
+        </ul>
+      </div>
       <div class="news-flash fr">
         <div class="bargain">
           <a href="#" class="user-picture fl"
@@ -229,9 +236,29 @@ export default {
 }
 
 .swiper-container {
-  width: 790px;
+  width: 590px;
   height: 470px;
   margin: 0;
+  --swiper-navigation-color: #ffffff; /* 单独设置按钮颜色 */
+  --swiper-navigation-size: 18px; /* 设置按钮大小 */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  width: 25px;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.swiper-button-prev {
+  left: 0;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+.swiper-button-next {
+  right: 0;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
 }
 
 .recommend {

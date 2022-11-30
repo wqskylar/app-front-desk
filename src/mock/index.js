@@ -1,7 +1,40 @@
 import Mock from 'mockjs';
 import banner from './banner.json'
 import floor from './floor.json'
+import search from './search.json'
+
 // mock 拦截 ajax 
+// 轮播图图片
+Mock.mock('/mock/banner', 'get', {
+    code: 200,
+    data: banner
+})
+// Mock.mock('/api', 'get', {
+//     code: 200,
+//     data: floor
+// })
+
+// search模块
+Mock.mock('/mock/list', 'post', {
+    code: 200,
+    data: search
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 三级菜单数据
 Mock.mock('/mock/product/getBaseCategoryList', 'get', {
     typeNav: [{
@@ -289,14 +322,4 @@ Mock.mock('/mock/product/getBaseCategoryList', 'get', {
             }
         ]
     }]
-})
-
-// 轮播图图片
-Mock.mock('/mock/banner', 'get', {
-    code: 200,
-    data: banner
-})
-Mock.mock('/api', 'get', {
-    code: 200,
-    data: floor
 })

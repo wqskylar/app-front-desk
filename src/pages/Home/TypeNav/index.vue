@@ -9,9 +9,9 @@
         >
           <div class="dt">全部商品分类</div>
 
-          <div class="dd" @click="goSearch">
+          <div class="dd" @click="goSearch" v-show="show">
             <transition name="dd">
-              <ul v-show="show">
+              <ul>
                 <li v-for="c1 in categoryList" :key="c1.id">
                   <div class="c2">
                     <div class="c2Left">
@@ -153,6 +153,7 @@ export default {
 .dd {
   height: 470px;
   padding: 12px 0 10px 0;
+
   ul {
     position: relative;
     background-color: #fefefe;
