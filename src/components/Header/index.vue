@@ -100,7 +100,7 @@ export default {
     goSearch() {
       // 搜索按钮的回调函数
       let params = {
-        keyWord: this.keyWord || "",
+        keyWord: this.keyWord || "\n",
       };
       let location = {
         name: "search",

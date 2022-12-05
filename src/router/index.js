@@ -9,7 +9,7 @@ import Home from '@/pages/Home'
 import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
-import home from '@/store/home';
+import detail from '@/pages/detail'
 
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -66,6 +66,14 @@ export default new VueRouter({
             component: Register,
             meta: {
                 show: false
+            }
+        },
+        {
+            name: 'detail',
+            path: '/detail',
+            component: detail,
+            meta: {
+                show: true
             }
         },
     ]

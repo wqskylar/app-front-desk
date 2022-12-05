@@ -8,7 +8,12 @@
           <!-- 商品展示区域 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
+              <li
+                class="yui3-u-1-5"
+                v-for="good in goodsList"
+                :key="good.id"
+                @click="goDetail"
+              >
                 <div class="list-wrap">
                   <div class="p-img">
                     <a><img :src="good.img" /></a>
@@ -24,7 +29,7 @@
                   </div>
                   <div class="commit">
                     <i class="command"
-                      >已有<span>{{ good.id }}</span
+                      >已有<span>{{ good.person }}</span
                       >人评价</i
                     >
                   </div>
@@ -62,7 +67,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Search",
@@ -108,6 +113,9 @@ export default {
     curPage(curPage) {
       this.searchData.curPage = curPage;
       this.getData();
+    },
+    goDetail() {
+      this.$router.push("/detail");
     },
   },
   beforeMount() {
@@ -291,6 +299,7 @@ export default {
             width: 20%;
             margin-top: 10px;
             line-height: 28px;
+            cursor: pointer;
 
             .list-wrap {
               .p-img {
