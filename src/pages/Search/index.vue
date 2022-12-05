@@ -3,74 +3,30 @@
     <TypeNav />
     <div class="main">
       <div class="py-container">
-        <div class="bread">
-          <ul class="fl sui-breadcrumb">
-            <li>
-              <a href="#">全部结果</a>
-            </li>
-          </ul>
-          <ul class="fl sui-tag">
-            <!--商品的名字的面包屑的地方  -->
-            <li class="with-x">
-              <i>×</i>
-            </li>
-            <!-- 关键字面包屑的地方 -->
-            <li class="with-x">
-              <i>×</i>
-            </li>
-            <!-- 品牌的面包屑 -->
-            <li class="with-x">
-              <i>×</i>
-            </li>
-
-            <!-- 商品属性值面包屑的地方 -->
-            <li class="with-x">
-              <i>×</i>
-            </li>
-          </ul>
-        </div>
-
-        <!--selector:子组件-->
-        <!-- 绑定自定义事件:实现儿子给父组件传递数据 -->
-        <SearchSelector />
-
         <!--details-->
         <div class="details container">
-          <div class="sui-navbar">
-            <div class="navbar-inner filter">
-              <!-- 综合|价格排序的地方 -->
-              <ul class="sui-nav">
-                <li>
-                  <a>综合 <span></span></a>
-                </li>
-                <li>
-                  <a>价格 <span></span></a>
-                </li>
-              </ul>
-            </div>
-          </div>
           <!-- 商品展示区域 -->
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5">
+              <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <!--商品的图片:需要路由跳转的时候,携带商品的ID-->
-                    <!-- <router-link :to="`/detail/${good.id}`"
-                      ><img :src="good.defaultImg"
-                    /></router-link> -->
+                    <a><img :src="good.img" /></a>
                   </div>
                   <div class="price">
-                    <!-- <strong>
+                    <strong>
                       <em>¥</em>
                       <i>{{ good.price }}.00</i>
-                    </strong> -->
+                    </strong>
                   </div>
                   <div class="attr">
-                    <!-- <a :title="good.title">{{ good.title }}</a> -->
+                    <a :title="good.title">{{ information }}</a>
                   </div>
                   <div class="commit">
-                    <i class="command">已有<span></span>人评价</i>
+                    <i class="command"
+                      >已有<span>{{ good.id }}</span
+                      >人评价</i
+                    >
                   </div>
                   <div class="operate">
                     <a
@@ -88,15 +44,17 @@
             </ul>
           </div>
           <!-- 分页的地方 -->
-          <!-- <div class="fr page">
-            <Pagination
-              :total="total"
-              :pageSize="searchParams.pageSize"
-              :pageNo="searchParams.pageNo"
-              :pagerCount="5"
-              @currentPage="currentPage"
-            ></Pagination>
-          </div> -->
+          <div class="paging container">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="100"
+              :pager-count="7"
+              class="fr"
+              @current-change="curPage"
+            >
+            </el-pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -105,96 +63,175 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import SearchSelector from "./SearchSelector/SearchSelector";
 
 export default {
   name: "Search",
-  components: {
-    SearchSelector,
+  components: {},
+  data() {
+    return {
+      searchData: {
+        category1id: "",
+        category2id: "",
+        category3id: "",
+        keyWord: "",
+        categoryname: "",
+        curPage: 1,
+      },
+    };
+  },
+  watch: {
+    $route(val, oldVal) {
+      Object.assign(this.searchData, this.$route.query, this.$route.params);
+      this.getData();
+      Object.assign(this.searchData, {
+        category1id: "",
+        category2id: "",
+        category3id: "",
+      });
+    },
   },
   computed: {
     // ...mapState("search", ["searchList"]),
-    ...mapGetters(["attrsList", "goodsList", "trademarkList"]),
+    ...mapGetters("search", [
+      "attrsList",
+      "goodsList",
+      "trademarkList",
+      "information",
+    ]),
+  },
+  methods: {
+    // 发送search组件Ajax请求
+    getData() {
+      this.$store.dispatch("search/getSearchList", this.searchData);
+    },
+    // 分页器部分
+    curPage(curPage) {
+      this.searchData.curPage = curPage;
+      this.getData();
+    },
+  },
+  beforeMount() {
+    Object.assign(this.searchData, this.$route.query, this.$route.params);
+    // console.log(this.searchData);
   },
   mounted() {
-    this.$store.dispatch("search/getSearchList", {});
+    // search 发请求
+    this.getData();
   },
 };
 </script>
 
 <style lang="less" scoped>
+.selector {
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+  overflow: hidden;
+
+  .logo {
+    border-top: 0;
+    margin: 0;
+    // position: relative;
+    overflow: hidden;
+
+    .key {
+      padding-bottom: 87px !important;
+    }
+  }
+
+  .type-wrap {
+    margin: 0;
+    // position: relative;
+    border-top: 1px solid #ddd;
+    overflow: hidden;
+
+    .key {
+      width: 100px;
+      background: #f1f1f1;
+      line-height: 26px;
+      text-align: right;
+      padding: 10px 10px 0 15px;
+      float: left;
+    }
+
+    .value {
+      overflow: hidden;
+      padding: 10px 0 0 15px;
+      color: #333;
+      margin-left: 120px;
+      padding-right: 90px;
+
+      .logo-list {
+        li {
+          float: left;
+          border: 1px solid #e4e4e4;
+          margin: -1px -1px 0 0;
+          width: 105px;
+          height: 52px;
+          text-align: center;
+          line-height: 52px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-weight: 700;
+          color: #e1251b;
+          font-style: italic;
+          font-size: 14px;
+
+          img {
+            max-width: 100%;
+            vertical-align: middle;
+          }
+        }
+      }
+
+      .type-list {
+        li {
+          float: left;
+          display: block;
+          margin-right: 30px;
+          line-height: 26px;
+
+          a {
+            text-decoration: none;
+            color: #666;
+          }
+        }
+      }
+    }
+
+    .ext {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+
+      .sui-btn {
+        display: inline-block;
+        padding: 2px 14px;
+        box-sizing: border-box;
+        margin-bottom: 0;
+        font-size: 12px;
+        line-height: 18px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        padding: 0 10px;
+        background: #fff;
+        border: 1px solid #d5d5d5;
+      }
+
+      a {
+        color: #666;
+      }
+    }
+  }
+}
+
 .main {
   margin: 10px 0;
 
   .py-container {
     width: 1200px;
     margin: 0 auto;
-
-    .bread {
-      margin-bottom: 5px;
-      overflow: hidden;
-
-      .sui-breadcrumb {
-        padding: 3px 15px;
-        margin: 0;
-        font-weight: 400;
-        border-radius: 3px;
-        float: left;
-
-        li {
-          display: inline-block;
-          line-height: 18px;
-
-          a {
-            color: #666;
-            text-decoration: none;
-
-            &:hover {
-              color: #4cb9fc;
-            }
-          }
-        }
-      }
-
-      .sui-tag {
-        margin-top: -5px;
-        list-style: none;
-        font-size: 0;
-        line-height: 0;
-        padding: 5px 0 0;
-        margin-bottom: 18px;
-        float: left;
-
-        .with-x {
-          font-size: 12px;
-          margin: 0 5px 5px 0;
-          display: inline-block;
-          overflow: hidden;
-          color: #000;
-          background: #f7f7f7;
-          padding: 0 7px;
-          height: 20px;
-          line-height: 20px;
-          border: 1px solid #dedede;
-          white-space: nowrap;
-          transition: color 400ms;
-          cursor: pointer;
-
-          i {
-            margin-left: 10px;
-            cursor: pointer;
-            font: 400 14px tahoma;
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
-          }
-
-          &:hover {
-            color: #28a3ef;
-          }
-        }
-      }
-    }
 
     .details {
       margin-bottom: 5px;
@@ -213,7 +250,7 @@ export default {
           box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 
           .sui-nav {
-            position: relative;
+            // position: relative;
             left: 0;
             display: block;
             float: left;
@@ -281,7 +318,7 @@ export default {
                   font-weight: 700;
 
                   i {
-                    margin-left: -5px;
+                    margin-left: 5px;
                   }
                 }
               }

@@ -15,9 +15,19 @@ Mock.mock('/mock/banner', 'get', {
 // })
 
 // search模块
-Mock.mock('/mock/list', 'post', {
-    code: 200,
-    data: search
+Mock.mock('/mock/list', 'post', (config) => {
+    let temp = JSON.parse(config.body);
+    let information = '';
+    if (temp.categoryname || temp.keyWord) {
+        information = `${temp.categoryname}\n${temp.keyWord}\n第${temp.curPage}页相关商品信息`;
+    } else {
+        information = `第${temp.curPage}页默认展示的的商品`
+    }
+    search.information = information;
+    return {
+        code: 200,
+        data: search,
+    }
 })
 
 

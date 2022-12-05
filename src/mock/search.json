@@ -1,6 +1,67 @@
 {
     "attrsList": [],
-    "goodsList": [],
+    "goodsList": [
+        {
+            "id": "001",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "002",
+            "img": "./images/search/mobile02.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "003",
+            "img": "./images/search/mobile03.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "004",
+            "img": "./images/search/mobile04.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "005",
+            "img": "./images/search/mobile05.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "006",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "007",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "008",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "009",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        },
+        {
+            "id": "010",
+            "img": "./images/search/mobile01.png",
+            "price": "9",
+            "title": "商品的title"
+        }
+    ],
     "trademarkList": [],
     "pageNo": 1,
     "pageSize": 10,

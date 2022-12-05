@@ -99,14 +99,16 @@ export default {
   methods: {
     goSearch() {
       // 搜索按钮的回调函数
+      let params = {
+        keyWord: this.keyWord || "",
+      };
       let location = {
         name: "search",
-        params: {
-          keyWord: this.keyWord || undefined,
-        },
       };
+      location.params = params;
       if (this.$route.query) {
         location.query = this.$route.query;
+
         this.$router.push(location);
       } else {
         this.$router.push(location);
