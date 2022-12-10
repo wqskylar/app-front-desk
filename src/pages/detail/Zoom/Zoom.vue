@@ -1,34 +1,24 @@
 <template>
   <div class="spec-preview">
-    <img :src="bigObj.imgUrl" />
+    <img :src="imgUrl" />
     <!-- 绑定鼠标移动事件 -->
     <div class="event" @mousemove="handler"></div>
     <div class="big">
-      <img :src="bigObj.imgUrl" ref="big" />
+      <img :src="imgUrl" ref="big" />
     </div>
     <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   name: "Zoom",
-  data(){
+  data() {
     return {
-      index:0
-    }
+      imgUrl: "/images/search/mobile01.png",
+    };
   },
-  computed: {
-    ...mapGetters(["skuInfo"]),
-    //比如:服务器的数据没有回来,skuInfo空对象,如果空对象.skuImageList->undefined
-    skuImageList() {
-      return this.skuInfo.skuImageList || [];
-    },
-    bigObj() {
-      return this.skuImageList[this.index] || {};
-    },
-  },
+  computed: {},
   methods: {
     handler(e) {
       //获取蒙板
@@ -48,12 +38,12 @@ export default {
       big.style.top = -2 * t + "px";
     },
   },
-  mounted(){
-    //接受兄弟组件传递过来的索引值
-    this.$bus.$on('sendIndex',(index)=>{
-        this.index = index;
-    })
-  }
+  mounted() {},
+  created() {
+    this.$bus.$on("image", (cur) => {
+      this.imgUrl = cur.url;
+    });
+  },
 };
 </script>
 

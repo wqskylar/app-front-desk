@@ -4,27 +4,24 @@
     <TypeNav />
     <!-- 主要内容区域 -->
     <section class="con">
-      <!-- 导航路径区域:面包屑 -->
-      <div class="conPoin">
-        <!-- 程序的警告:categoryView是undefined,它是vuex给的 -->
-        <span>xxx</span>
-        <span>xxx</span>
-        <span>xxx</span>
-      </div>
       <!-- 主要内容区域 -->
       <div class="mainCon">
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <!-- <Zoom /> -->
+          <Zoom />
           <!-- 小图列表 -->
-          <!-- <ImageList /> -->
+          <ImageList :images-list="detail.imagesList" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
-            <h3 class="InfoName">xxx</h3>
-            <p class="news">xxx</p>
+            <h3 class="InfoName">
+              {{ detail.name }}
+            </h3>
+            <p class="news">
+              {{ detail.news }}
+            </p>
             <div class="priceArea">
               <div class="priceArea1">
                 <div class="title">
@@ -32,13 +29,8 @@
                 </div>
                 <div class="price">
                   <i>¥</i>
-                  <em>xxx</em>
+                  <em>{{ detail.price }}</em>
                   <span>降价通知</span>
-                </div>
-                <div class="remark">
-                  <i>累计评价</i>
-                  <!--代表的是某一个数字的多少幂-->
-                  <em>xxx</em>
                 </div>
               </div>
               <div class="priceArea2">
@@ -46,8 +38,8 @@
                   <i>促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</i>
                 </div>
                 <div class="fixWidth">
-                  <i class="red-bg">加价购</i>
-                  <em class="t-gray">xxx</em>
+                  <i class="red-bg">优惠券</i>
+                  <em class="t-gray">满400减70</em>
                 </div>
               </div>
             </div>
@@ -71,22 +63,39 @@
             <div class="chooseArea">
               <div class="choosed"></div>
               <!--这里是商品销售属性的地方-->
-              <dl>
-                <dt class="title">xxx</dt>
+              <dl v-for="(row, outIndex) in detail.choice" :key="outIndex">
+                <dt class="title">{{ row.title }}</dt>
                 <!--每一个销售属性的属性值的地方-->
-                <dd>xxx</dd>
+                <dd
+                  v-for="(temp, inIndex) in row.content"
+                  :key="inIndex"
+                  @click="handleClick(temp, row.content)"
+                  :class="{ active: temp.isChecked }"
+                >
+                  {{ temp.attr }}
+                </dd>
               </dl>
             </div>
             <div class="cartWrap">
               <!-- 购物商品个数的操作地方 -->
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="changeSku"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : (skuNum = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
                 <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
-                <a>加入购物车</a>
+                <a @click="addToCart()">加入购物车</a>
               </div>
             </div>
           </div>
@@ -101,22 +110,48 @@
 <script>
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
+
 //通过辅助函数获取数据
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Detail",
-  data() {
-    return {};
-  },
   components: {
     ImageList,
     Zoom,
   },
-  mounted() {},
-  computed: {
-    // ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
+  data() {
+    return {
+      skuNum: 1,
+    };
   },
-  methods: {},
+  mounted() {
+    this.$store.dispatch("detail/getDetail");
+  },
+  computed: {
+    ...mapState("detail", ["detail"]),
+  },
+  methods: {
+    handleClick(content, row) {
+      row.forEach((element) => {
+        element.isChecked = 0;
+      });
+      content.isChecked = 1;
+    },
+    changeSku(event) {
+      const value = event.target.value;
+      // 如果输入的内容不是正整数，就清空文本框
+      if (!/^[1-9][0-9]*$/.test(value)) {
+        this.skuNum = 1;
+      }
+    },
+    addToCart() {
+      // 使用路由信息进行跳转
+      this.$router.push({
+        name: "addShopCar",
+        params: { skuNum: this.skuNum },
+      });
+    },
+  },
 };
 </script>
 
@@ -162,7 +197,7 @@ export default {
         }
 
         .priceArea {
-          background: #fee9eb;
+          background: #f8f0f1;
           padding: 7px;
           margin: 13px 0;
 
@@ -191,6 +226,7 @@ export default {
 
               span {
                 font-size: 12px;
+                margin-left: 10px;
               }
             }
 
@@ -275,8 +311,8 @@ export default {
                 border-left: 1px solid #eee;
 
                 &.active {
-                  color: green;
-                  border: 1px solid green;
+                  color: red;
+                  border: 1px solid red;
                 }
               }
             }
@@ -334,6 +370,7 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 display: block;
+                cursor: pointer;
               }
             }
           }

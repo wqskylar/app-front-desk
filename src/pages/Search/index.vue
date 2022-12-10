@@ -115,7 +115,12 @@ export default {
       this.getData();
     },
     goDetail() {
-      this.$router.push("/detail");
+      this.$router.push({
+        name: "detail",
+        params: {
+          id: "001",
+        },
+      });
     },
   },
   beforeMount() {

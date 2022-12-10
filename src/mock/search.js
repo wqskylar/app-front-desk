@@ -1,5 +1,5 @@
 (function () {
-    import('mockjs').then(({ default: Mock }) => {
+    import('mockjs').then(Mock => {
         Mock.mock('/mock/list', 'post', (config) => {
             Mock.Random.extend({
                 url: function () {

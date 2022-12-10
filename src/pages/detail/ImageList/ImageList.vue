@@ -3,75 +3,57 @@
     <div class="swiper-wrapper">
       <div
         class="swiper-slide"
-        v-for="(slide, index) in skuInfo.skuImageList"
-        :key="index"
+        @click="handler(temp)"
+        v-for="temp in imagesList"
+        :key="temp.id"
       >
-        <img
-          :src="slide.imgUrl"
-          :class="{ active: currentIndex == index }"
-          @click="handler(index)"
-        />
+        <img :src="temp.url" />
       </div>
     </div>
-    <div class="swiper-button-next" @click="add"></div>
-    <div class="swiper-button-prev" @click="minus"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
   </div>
 </template>
 
 <script>
 import Swiper from "swiper";
 import "swiper/css/swiper.min.css";
-import { mapGetters } from "vuex";
 export default {
   name: "ImageList",
   data() {
     return {
-      //控制小图类名的索引值
-      currentIndex: 0,
+      cur: {},
     };
   },
-  computed: {
-    ...mapGetters(["skuInfo"]),
-  },
-  watch: {
-    skuInfo() {
-      //保证数据发生修改,页面结构再次渲染完毕。在初始化Swiper实例
-      this.$nextTick(() => {
-        //初始化Swiper类的实例
-        var mySwiper = new Swiper(this.$refs.cur, {
-          //设置轮播图防线
-          direction: "horizontal",
-          // loop:true,
-          // 如果需要前进后退按钮
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-          //展示区域同时展示三张图片
-          slidesPerView: 2,
-        });
-      });
-    },
-  },
+  props: ["imagesList"],
   methods: {
     //小图的点击事件
-    handler(index) {
-      //修改响应式数据存储当前用户点击的索引值
-      this.currentIndex = index;
-      //全局事件总线，通知兄弟当前图片的索引值
-      this.$bus.$emit("sendIndex", index);
+    handler(cur) {
+      this.$bus.$emit("image", cur);
     },
-    minus() {
-      this.currentIndex--;
-      if (this.currentIndex <= 0) this.currentIndex = 0;
-      this.$bus.$emit("sendIndex", this.currentIndex);
-    },
-    add() {
-      this.currentIndex++;
-      if (this.currentIndex >= this.skuInfo.skuImageList.length - 1) {
-        this.currentIndex = this.skuInfo.skuImageList.length - 1;
+    minus() {},
+    add() {},
+  },
+  mounted() {},
+  watch: {
+    imagesList(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.$nextTick(() => {
+          //初始化Swiper类的实例
+          var mySwiper = new Swiper(this.$refs.cur, {
+            //设置轮播图防线
+            direction: "horizontal",
+            // loop: true,
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+            //展示区域同时展示三张图片
+            slidesPerView: 3,
+          });
+        });
       }
-      this.$bus.$emit("sendIndex", this.currentIndex);
     },
   },
 };

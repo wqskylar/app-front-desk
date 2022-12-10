@@ -19,3 +19,17 @@ export const reqGetSearchInfo = (params) => request({
     data: params,
 })
 
+// 商品详情
+export const reqGetDetail = (id) => request({
+    url: '/detail',
+    method: 'get',
+    id
+})
+
+// 购物车模块
+export const reqShopCart = (params) => request({
+    url: '/shopCart',
+    method: 'post',
+    data: params,
+})
+

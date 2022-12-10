@@ -10,6 +10,8 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import detail from '@/pages/detail'
+import AddShopCar from "@/pages/addShopCar"
+import ShopCart from "@/pages/ShopCart"
 
 let originPush = VueRouter.prototype.push;
 let originReplace = VueRouter.prototype.replace;
@@ -70,11 +72,31 @@ export default new VueRouter({
         },
         {
             name: 'detail',
-            path: '/detail',
+            path: '/detail/',
             component: detail,
             meta: {
                 show: true
             }
         },
-    ]
+        {
+            name: 'addShopCar',
+            path: '/addShopCar',
+            component: AddShopCar,
+            meta: {
+                show: true
+            }
+        },
+        {
+            name: 'shopCart',
+            path: '/shopCart',
+            component: ShopCart,
+            meta: {
+                show: true
+            }
+        },
+
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 })

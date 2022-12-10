@@ -11,6 +11,7 @@
 <script>
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Vue from "vue";
 
 export default {
   name: "App",
@@ -20,6 +21,10 @@ export default {
   },
   mounted() {
     this.$store.dispatch("home/categoryList");
+    // this.$router.push({ name: "home" });
+  },
+  created() {
+    Vue.prototype.$bus = new Vue();
   },
 };
 </script>
