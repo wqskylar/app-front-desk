@@ -1,6 +1,5 @@
 <template>
   <div class="cart">
-    <h4>全部商品</h4>
     <div class="cart-main">
       <div class="cart-th">
         <div class="cart-th1">全部</div>
@@ -11,48 +10,45 @@
         <div class="cart-th6">操作</div>
       </div>
       <div class="cart-body">
-        <ul class="cart-list">
+        <ul class="cart-list" v-show="shopShow">
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" />
+            <input type="checkbox" name="chk_list" value="xxxxx" />
           </li>
           <li class="cart-list-con2">
-            <img src="" />
-            <div class="item-msg">xxx</div>
+            <img src="./images/mobile01.png" />
+            <div class="item-msg">
+              Apple iPhone 14 (A2884) 128GB 紫色 支持移动联通电信5G 双卡双待手机
+            </div>
           </li>
           <li class="cart-list-con4">
-            <span class="price">xx.00</span>
+            <span class="price">{{ price }}.00</span>
           </li>
           <li class="cart-list-con5">
-            <a class="mins">-</a>
-            <input autocomplete="off" type="text" minnum="1" class="itxt" />
-            <a class="plus">+</a>
+            <a class="mins" @click="skuNum > 1 ? skuNum-- : (skuNum = 1)">-</a>
+            <input
+              autocomplete="off"
+              type="text"
+              minnum="1"
+              class="itxt"
+              v-model="skuNum"
+              @change="changeSku"
+            />
+            <a class="plus" @click="skuNum++">+</a>
           </li>
           <li class="cart-list-con6">
-            <span class="sum">xxx</span>
+            <span class="sum">{{ totalPrice }}</span>
           </li>
           <li class="cart-list-con7">
-            <a class="sindelet">删除</a>
-            <br />
-            <a href="#none">移到收藏</a>
+            <a class="sindelet" @click="deleteShop">删除</a>
           </li>
         </ul>
       </div>
     </div>
     <div class="cart-tool">
-      <div class="select-all">
-        <input class="chooseAll" type="checkbox" />
-        <span>全选</span>
-      </div>
-      <div class="option">
-        <a>删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
-      </div>
-      <div class="money-box">
-        <div class="chosed">已选择 <span></span>件商品</div>
+      <div class="money-box" v-show="shopShow">
         <div class="sumprice">
           <em>总价（不含运费）</em>
-          <i class="summoney">xxx</i>
+          <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
           <router-link class="sum-btn" to="">结算</router-link>
@@ -64,16 +60,42 @@
 
 <script>
 import { reqShopCart } from "@/api/index";
+import "@/uuid/uuid";
 
 export default {
   name: "ShopCart",
-  mounted() {
-    const example = async () => {
-      let result = await reqShopCart("你好");
-
-      console.log(result);
+  data() {
+    return {
+      skuNum: 1,
+      price: 0,
+      shopShow: true,
     };
-    example();
+  },
+  computed: {
+    totalPrice() {
+      return this.price * this.skuNum;
+    },
+  },
+  methods: {
+    async network() {
+      return await reqShopCart(this.$route.query.skuNum);
+    },
+    changeSku(event) {
+      const value = event.target.value;
+      // 如果输入的内容不是正整数，就清空文本框
+      if (!/^[1-9][0-9]*$/.test(value)) {
+        this.skuNum = 1;
+      }
+    },
+    deleteShop() {
+      this.shopShow = false;
+    },
+  },
+  mounted() {
+    this.network().then((result) => {
+      this.price = result.data.price;
+      this.skuNum = result.data.skuNum;
+    });
   },
 };
 </script>
@@ -213,8 +235,8 @@ export default {
 
         .cart-list-con7 {
           width: 13%;
-
           a {
+            font-size: 16px;
             color: #666;
           }
         }
@@ -225,32 +247,6 @@ export default {
   .cart-tool {
     overflow: hidden;
     border: 1px solid #ddd;
-
-    .select-all {
-      padding: 10px;
-      overflow: hidden;
-      float: left;
-
-      span {
-        vertical-align: middle;
-      }
-
-      input {
-        vertical-align: middle;
-      }
-    }
-
-    .option {
-      padding: 10px;
-      overflow: hidden;
-      float: left;
-
-      a {
-        float: left;
-        padding: 0 10px;
-        color: #666;
-      }
-    }
 
     .money-box {
       float: right;
