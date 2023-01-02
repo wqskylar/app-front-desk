@@ -88,6 +88,7 @@ li {
 a {
   color: #999999;
   text-decoration: none;
+  cursor: pointer;
 }
 
 i {

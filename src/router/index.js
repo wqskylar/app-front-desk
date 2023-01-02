@@ -35,9 +35,13 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 }
 
 
-export default new VueRouter({
+const router = new VueRouter({
     // 配置路由
     routes: [
+        {
+            path: '/',
+            redirect: '/home'
+        },
         {
             name: 'home',
             path: '/home',
@@ -100,3 +104,30 @@ export default new VueRouter({
         return { x: 0, y: 0 }
     }
 })
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+    if (to.path === '/login') {
+        if (localStorage.getItem('token')) {
+            next({ path: '/home' })
+        } else {
+            next()
+        }
+    } else {
+        next() // 如果访问的不是 /login 路由，则继续访问
+    }
+
+    // if (to.path === '/') {
+    //     next({ path: '/home' })
+    // } else {
+    //     next() // 如果访问的不是 /login 路由，则继续访问
+    // }
+})
+
+// 全局后置守卫
+router.afterEach((to, from) => {
+    // 在这里做一些路由跳转后的操作
+})
+
+
+export default router

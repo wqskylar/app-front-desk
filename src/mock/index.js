@@ -10,5 +10,11 @@ Mock.mock('/mock/banner', 'get', {
     data: banner
 })
 
+Mock.mock('/mock/token', 'get', "@guid"
+)
+
+Mock.mock('/mock/username', 'get', "@cname"
+)
+
 
 

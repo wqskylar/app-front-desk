@@ -10,8 +10,16 @@
             <a href="#">北京</a>
           </li>
           <li class="log-and-register">
-            <router-link class="style-red" to="/register">注册</router-link>
-            <router-link class="style-red" to="/login">登录</router-link>
+            <router-link class="style-red" to="/register" v-show="!tokenable"
+              >注册</router-link
+            >
+            <router-link class="style-red" to="/login" v-show="!tokenable"
+              >登录</router-link
+            >
+            <a href="#" class="style-red" v-show="tokenable">{{ loginLeft }}</a>
+            <a href="#" class="style-red" v-show="tokenable" @click="exit"
+              >退出</a
+            >
           </li>
         </ul>
         <ul class="ulRight fr">
@@ -89,11 +97,15 @@
 </template>
 
 <script>
+import { reqUserName } from "@/api";
+
 export default {
   name: "Header",
   data() {
     return {
       keyWord: "",
+      loginLeft: "登录",
+      tokenable: false,
     };
   },
   methods: {
@@ -114,6 +126,28 @@ export default {
         this.$router.push(location);
       }
     },
+    async getUser(token) {
+      let res = await reqUserName(token);
+      return res.data;
+    },
+    exit() {
+      localStorage.removeItem("token");
+      this.tokenable = false;
+    },
+    exToken() {
+      if (localStorage.getItem("token")) {
+        this.getUser(localStorage.getItem("token")).then((data) => {
+          this.loginLeft = data;
+          this.tokenable = true;
+        });
+      }
+    },
+  },
+  mounted() {
+    this.exToken();
+    this.$bus.$on("login", () => {
+      this.exToken();
+    });
   },
 };
 </script>
@@ -156,7 +190,7 @@ export default {
 .logo {
   position: absolute;
   height: 100%;
-  top: 0;
+  top: 10px;
   left: 30px;
 
   h1 {
@@ -175,7 +209,7 @@ export default {
 
 .search {
   position: absolute;
-  top: 20px;
+  top: 35px;
   left: 710px;
 
   input {
@@ -197,7 +231,7 @@ export default {
 
 .hot-word {
   position: absolute;
-  top: 65px;
+  top: 80px;
   left: 710px;
   a {
     margin: 0 12px;

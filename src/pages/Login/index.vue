@@ -3,7 +3,7 @@
     <div class="login-wrap">
       <div class="login">
         <div class="loginform">
-          <ul class="tab clearFix">
+          <ul class="tab container">
             <li>
               <a href="##" style="border-right: 0">扫描登录</a>
             </li>
@@ -16,11 +16,19 @@
             <form action="##">
               <div class="input-text clearFix">
                 <span></span>
-                <input type="text" placeholder="邮箱/用户名/手机号" />
+                <input
+                  type="text"
+                  placeholder="邮箱/用户名/手机号"
+                  v-model="account"
+                />
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input type="text" placeholder="请输入密码" />
+                <input
+                  type="text"
+                  placeholder="请输入密码"
+                  v-model="password"
+                />
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
@@ -30,16 +38,19 @@
                 <span class="forget">忘记密码？</span>
               </div>
 
-              <button class="btn">登&nbsp;&nbsp;录</button>
+              <button
+                class="btn"
+                @click="
+                  login(account, password)
+                    .then(loginResolved)
+                    .catch(loginRejected)
+                "
+              >
+                登&nbsp;&nbsp;录
+              </button>
             </form>
 
             <div class="call clearFix">
-              <ul>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-                <li><img src="" alt="" /></li>
-              </ul>
               <router-link class="register" to="/register"
                 >立即注册</router-link
               >
@@ -52,10 +63,33 @@
 </template>
 
 <script>
+import { reqToken } from "@/api";
+
 export default {
   name: "Login",
   data() {
-    return {};
+    return {
+      account: "",
+      password: "",
+      token: "",
+    };
+  },
+  methods: {
+    async login(account, password) {
+      let params = { account, password };
+      let res = await reqToken(params);
+      return res.data;
+    },
+    loginResolved(data) {
+      localStorage.setItem("token", data);
+      this.$bus.$emit("login");
+      this.$router.push({
+        name: "home",
+      });
+    },
+    loginRejected() {
+      // console.log("登录失败");
+    },
   },
 };
 </script>

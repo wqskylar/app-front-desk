@@ -33,3 +33,17 @@ export const reqShopCart = (params) => request({
     data: params,
 })
 
+export const reqToken = (params) => request({
+    url: '/token',
+    method: 'get',
+    data: params,
+})
+
+export const reqUserName = (token) => request({
+    url: '/username',
+    method: 'get',
+    data: token
+})
+
+
+
