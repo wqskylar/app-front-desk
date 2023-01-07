@@ -12,7 +12,7 @@
 ![home](https://user-images.githubusercontent.com/115355943/211132387-7acf14e6-5c56-4a39-acab-796adf35aefe.gif)
 
 **实现了登录和注册功能**
-![Screenshot](./rm_images/login.gif)
+![login](https://user-images.githubusercontent.com/115355943/211132792-e916a37c-12fe-4da5-989b-40b744fd89a6.gif)
 
 **能够多级联动，并根据点击商品跳转到对应搜索页**
 ![Screenshot](./rm_images/show3.png)
