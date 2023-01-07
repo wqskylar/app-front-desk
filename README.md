@@ -8,7 +8,7 @@
 
 ### Login and registration
 **实现了登录和注册功能**
-![Screenshot](./rm_images/show1.png)
+![Screenshot](./rm_images/login.gif)
 
 ### Typenav
 **能够多级联动，并根据点击商品跳转到对应搜索页**
